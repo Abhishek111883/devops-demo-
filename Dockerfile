@@ -17,7 +17,7 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # Copy built jar from builder stage
-COPY --from=builder /app/build/libs/*.jar app.jar
+COPY --from=builder /app/build/libs/*.jar /app/libs/
 
 # Expose the port Spring Boot runs on
 EXPOSE 8080

@@ -9,6 +9,10 @@ pipeline{
         DOCKER_TAG = 'latest'
         DOCKER_CREDENTIALS = credentials('2d0bf101-09fb-4946-9c3d-9baba7f0d980')
     }
+    parameters {
+            string(name: 'DEPLOY_ENV', defaultValue: 'dev', description: 'Deployment Environment')
+            booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run Tests?')
+    }
 
     stages {
         stage('CheckOut') {
@@ -31,7 +35,6 @@ pipeline{
             steps{
                 script {
                     sh '''
-
                     chmod +x gradlew
                     ./gradlew build
 
@@ -41,15 +44,28 @@ pipeline{
         }
 
         stage('Test'){
+            when {
+                expression { params.RUN_TESTS }
+            }
             steps{
                 script {
                     sh '''
-
                     chmod +x gradlew
                     ./gradlew test
-
                     '''
                 }
+            }
+        }
+
+        stage('Publish Test Results') {
+            steps {
+                junit '**/build/test-results/test/*.xml',
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
             }
         }
 
@@ -75,7 +91,7 @@ pipeline{
             steps {
                 script {
                     sh '''
-                    echo "Deploying application..."
+                    echo "Deploying application... to ${params.DEPLOY_ENV} environment"
                     '''
                 }
             }

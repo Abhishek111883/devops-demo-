@@ -7,7 +7,7 @@ pipeline{
         GIT_BRANCH = '*/main'
         DOCKER_IMAGE = 'developer597/publish_using_jenkins'
         DOCKER_TAG = 'latest'
-        DOCKER_CREDENTIALS = credentials('200bf101-09fb-4946-9c3d-9baba7f0d986')
+        DOCKER_CREDENTIALS = credentials('2d0bf101-09fb-4946-9c3d-9baba7f0d980')
     }
 
     stages {

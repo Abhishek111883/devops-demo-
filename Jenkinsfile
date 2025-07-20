@@ -91,7 +91,8 @@ pipeline{
             steps {
                 script {
                     sh '''
-                    echo "Deploying application... to ${params.DEPLOY_ENV} environment"
+                    def env = params.DEPLOY_ENV
+                    echo "Deploying application... to ${env} environment"
                     '''
                 }
             }

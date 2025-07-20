@@ -99,14 +99,15 @@ pipeline{
     }
 
     post{
-        always{
-            echo "====++++always++++===="
-        }
         success{
             echo "====++++only when successful++++===="
         }
         failure{
             echo "====++++only when failed++++===="
+        }
+        always{
+            echo '📦 Cleaning up workspace...'
+            cleanWs()
         }
     }
 }

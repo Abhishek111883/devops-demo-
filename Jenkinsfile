@@ -7,8 +7,7 @@ pipeline{
         GIT_BRANCH = '*/main'
         DOCKER_IMAGE = 'developer597/publish_using_jenkins'
         DOCKER_TAG = 'latest'
-        DOCKER_USERNAME = credentials('dockerhub-username')
-        DOCKER_PASSWORD = credentials('dockerhub-password')
+        DOCKER_CREDENTIALS = credentials('200bf101-09fb-4946-9c3d-9baba7f0d986')
     }
 
     stages {
@@ -59,7 +58,7 @@ pipeline{
                 script {
                     sh '''
                     docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
-                    echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+                    echo "${DOCKER_CREDENTIALS_PSW}" | docker login -u "${DOCKER_CREDENTIALS_USR}" --password-stdin
                     docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
                     '''
                 }

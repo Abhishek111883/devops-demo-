@@ -15,7 +15,7 @@ pipeline{
             steps {
                 script {
                     checkout([
-                        $class: 'GITSCM',
+                        $class: 'GitSCM',
                         branches: [[name: "${GIT_BRANCH}"]],
                         userRemoteConfigs: [[url: "${GIT_URL}"]],
                         extensions: [
